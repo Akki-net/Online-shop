@@ -34,13 +34,13 @@ def payment_process(request):
                     'product_data': {
                         'name': item.product.name,
                     },
-                    'quantity': item.quantity,
-                }
+                },
+                'quantity': item.quantity,
             })
         # create Stripe checkout session
         session = stripe.checkout.Session.create(**session_data)
         # redirect to Stripe payment form
-        return redirect(session_url, code=303)
+        return redirect(session.url, code=303)
     else:
         return render(request, 'payment/process.xhtml', locals())
 def payment_completed(request):
